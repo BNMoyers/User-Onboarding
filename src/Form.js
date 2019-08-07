@@ -48,12 +48,14 @@ const UserForm = ({ values, errors, touched, handleSubmit, status }) => {
                         <span className='checkmark'/>
                     </label>
                     
-                    <Field component='select' className='select-field' name='role'>
-                        <option>Please Select Your Role</option>
-                        <option>Pathfinder</option>
-                        <option>Venture Captain</option>
-                        <option>Masked Decemverite</option>
+                    <Field component='select' className='select-field' name='reach'>
+                        <option>How did you hear about us?</option>
+                        <option>My FLGS</option>
+                        <option>Gaming Group</option>
+                        <option>Forums</option>
+                        <option>Other</option>
 
+                        
                     </Field>
 
                     <button type='submit'>Sign Up!</button>
@@ -72,12 +74,15 @@ const UserForm = ({ values, errors, touched, handleSubmit, status }) => {
 };
 
 const FormikUserForm = withFormik({
-    mapPropsToValues({ username, email, password, tos, age }) {
+    mapPropsToValues({ username, email, password, tos, age, role, reach}) {
         return {
             username: username || '',
             email: email || '', 
             password: password || '',
-            tos: tos || false
+            role: role || '',
+            age: age || false,
+            tos: tos || false,
+            reach: reach || ''
         };
     },
 
@@ -87,6 +92,8 @@ const FormikUserForm = withFormik({
         username: Yup.string().required('username is required'),
         email: Yup.string().required('email is required'),
         password: Yup.string().min(8, 'passwords must be at least 8 characters').required('Password is required'),
+        age: Yup.bool().oneOf([true],'You must be 13 or older to sign up'),
+        tos: Yup.bool().oneOf([true],'You must accept the Terms of Service to sign up')
     }),
 
 
