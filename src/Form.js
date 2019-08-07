@@ -9,7 +9,7 @@ const UserForm = ({ values, errors, touched, handleSubmit, status }) => {
 
   useEffect(() => {
     if (status) {
-      setUsers([...users, status]);
+      setUsers(users => [...users, status]);
     }
   }, [status]);
 
@@ -34,7 +34,7 @@ const UserForm = ({ values, errors, touched, handleSubmit, status }) => {
             <option>Please Select Your Role</option>
             <option>Pathfinder</option>
             <option>Venture Captain</option>
-            <option>Masked Decemverite</option>
+            <option>Masked Decemvirate</option>
           </Field>
           <label className="checkbox-container">
             I am at least 13 years of age
@@ -104,11 +104,12 @@ const FormikUserForm = withFormik({
 
   //========End Schema===============
 
-  handleSubmit(values, { setStatus }) {
+  handleSubmit(values, { setStatus, resetForm }) {
     axios
       .post("https://reqres.in/api/users", values)
       .then(res => {
         setStatus(res.data);
+        resetForm({username:'', email: '', password: '', role: '', age: false, tos: false, reach: ''})
       })
       .catch(err => console.log("error", err.response));
   }
