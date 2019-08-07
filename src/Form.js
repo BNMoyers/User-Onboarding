@@ -2,8 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Form, Field, withFormik } from 'formik'
 import * as Yup from 'yup';
-import { __values } from 'tslib';
-import { animationFrameScheduler } from 'rxjs';
+
 
 const UserForm = ({ values, errors, touched, handleSubmit, status }) => {
     const [users, setUsers] = useState([]);
@@ -12,7 +11,8 @@ const UserForm = ({ values, errors, touched, handleSubmit, status }) => {
         if(status) {
             setUsers([...users, status])
         }
-    })
+    }, [status]);
+    
     return(
         <div>
             <h1> Create an Account</h1>
@@ -59,15 +59,22 @@ const FormikUserForm = withFormik({
     //=======Validation Schema==========
 
     validationSchema: Yup.object().shape({
-        username: Yup.string().required(),
-        email: Yup.string().required(),
-        password: Yup.string()..min(8).(required('passwords must be at least 8 characters'),
+        username: Yup.string().required('username is required'),
+        email: Yup.string().required('email is required'),
+        password: Yup.string().min(8, 'passwords must be at least 8 characters').required('Password is required'),
     }),
 
 
     //========End Schema===============
 
-
+handleSubmit(values, { setStatus }) {
+    axios
+        .post( 'https://reqres.in/api/users', values)
+        .then(res => {
+            setStatus(res.data);
+        })
+        .catch(err => console.log('error', err.response));
+}
 
 
 })(UserForm);
