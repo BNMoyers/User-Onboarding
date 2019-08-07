@@ -2,8 +2,9 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Form, Field, withFormik } from 'formik'
 import * as Yup from 'yup';
+import { __values } from 'tslib';
 
-const UserForm = props => {
+const UserForm = (values) => {
 
     return(
         <div>
@@ -11,7 +12,13 @@ const UserForm = props => {
             <Form>
                 <Field type='text' name='username' placeholder='Username' />
                 <Field type='email' name='email' placeholder='EMail' />
-                <Field type='text' name='password' placeholder='Password' />
+                <Field type='password' name='password' placeholder='Password' />
+                <label>
+                    I agree to the Terms of Service
+                <Field type='checkbox' name='tos' checked={values.tos} />
+                    
+                </label>
+                <button type='submit'>Sign Up!</button>
 
 
             </Form>
