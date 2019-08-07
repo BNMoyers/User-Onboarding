@@ -4,7 +4,7 @@ import { Form, Field, withFormik } from 'formik'
 import * as Yup from 'yup';
 import { __values } from 'tslib';
 
-const UserForm = (values) => {
+const UserForm = ({ values }) => {
 
     return(
         <div>
@@ -24,6 +24,17 @@ const UserForm = (values) => {
             </Form>
         </div>
     )
-}
+};
 
-export default UserForm;
+const FormikUserForm = withFormik({
+    mapPropsToValues({ username, email, password, tos }) {
+        return {
+            username: username || '',
+            email: email || '', 
+            password: password || '',
+            tos: tos || false
+        };
+    },
+})(UserForm);
+
+export default FormikUserForm;
