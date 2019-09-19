@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { withFormik, Form, Field } from "formik";
 import axios from "axios";
 import * as Yup from "yup";
+import gameDie from './gameDie.jpg'
 
 const SignUpForm = ({ values, errors, touched, status }) => {
   const [newUser, setNewUser] = useState([]);
@@ -77,7 +78,6 @@ useEffect(() => {
             {errors.age && <p className='error'>{errors.age}</p>}
         </label>
         <label className="checkbox-container">
-            I have read and agree to the Terms of Service
             <Field type="checkbox" name='tos' checked={values.tos}/>
             I have read and agree to the Terms of Service
             {errors.tos && <p className='error'>{errors.tos}</p>}
@@ -86,6 +86,7 @@ useEffect(() => {
       </Form>
     </div>
     <div className='display-users'>
+    <img src={gameDie} width='450' alt='thrown die'/>
             <h2>Our Users</h2>
             {newUser.map(user => (
               <div className='user' key={useEffect.id}>
