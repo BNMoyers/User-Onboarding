@@ -3,25 +3,37 @@ import { withFormik, Form, Field } from "formik";
 import axios from "axios";
 import * as Yup from "yup";
 
-const SignUpForm = ({ values }) => {
+const SignUpForm = ({ values, errors, touched }) => {
   return (
     <div>
       <Form>
       <label>
           Name
           <Field type="text" name="name" />
+          {touched.name && errors.name && (
+            <p>{errors.name}</p>
+          )}
         </label>
         <label>
           Username
           <Field type="text" name="username" />
+          {touched.username && errors.username && (
+            <p>{errors.username}</p>
+          )}
         </label>
         <label>
           Email
           <Field type="email" name="email" />
+          {touched.email && errors.email && (
+            <p>{errors.email}</p>
+          )}
         </label>
         <label>
           Password
           <Field type="text" name="password" />
+          {touched.password && errors.password && (
+            <p>{errors.password}</p>
+          )}
         </label>
         <label>
           Account Type
@@ -52,14 +64,18 @@ const SignUpForm = ({ values }) => {
             </Field>
         </label>
         <label>
-            I am at least 13 years of age
+            
             <Field type="checkbox" name='age' checked={values.age}/>
+            I am at least 13 years of age
+            {errors.age && <p>{errors.age}</p>}
         </label>
         <label>
             I have read and agree to the Terms of Service
             <Field type="checkbox" name='tos' checked={values.tos}/>
+            I have read and agree to the Terms of Service
+            {errors.tos && <p>{errors.tos}</p>}
         </label>
-        <button>Join Now!</button>
+        <button type="submit">Join Now!</button>
       </Form>
     </div>
   );
