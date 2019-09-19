@@ -12,39 +12,40 @@ useEffect(() => {
 },[status]);
 
   return (
-    <div>
+    <><div className='user-form'>
+      <h1>Create an Account</h1>
       <Form>
       <label>
           Name
           <Field type="text" name="name" />
           {touched.name && errors.name && (
-            <p>{errors.name}</p>
+            <p className='error'>{errors.name}</p>
           )}
         </label>
         <label>
           Username
           <Field type="text" name="username" />
           {touched.username && errors.username && (
-            <p>{errors.username}</p>
+            <p className='error'>{errors.username}</p>
           )}
         </label>
         <label>
           Email
           <Field type="email" name="email" />
           {touched.email && errors.email && (
-            <p>{errors.email}</p>
+            <p className='error'>{errors.email}</p>
           )}
         </label>
         <label>
           Password
           <Field type="text" name="password" />
           {touched.password && errors.password && (
-            <p>{errors.password}</p>
+            <p className='error'>{errors.password}</p>
           )}
         </label>
         <label>
           Account Type
-          <Field component="select" name="usertype" >
+          <Field component="select" className="select-field" name="usertype" >
             <option>Select an Account Type</option>
             <option value='gm'>Game Master/ Dungeon Master</option>
             <option value='player'>Player</option>
@@ -52,7 +53,7 @@ useEffect(() => {
         </label>
         <label>
           Ruleset
-          <Field component="select" name="ruleset" >
+          <Field component="select" className="select-field" name="ruleset" >
             <option>Select a Ruleset for Your Game</option>
             <option value='pathfinder'>Pathfinder</option>
             <option value='dnd'>Dungeons and Dragons</option>
@@ -62,7 +63,7 @@ useEffect(() => {
         </label>
         <label>
           Where did you Hear About Us?
-          <Field component="select" name="reach" >
+          <Field component="select" className="select-field" name="reach" >
             <option>Choose One</option>
             <option value='flgs'>Gaming Store</option>
             <option value='wordofmouth'>A Friend</option>
@@ -70,21 +71,28 @@ useEffect(() => {
             <option value='other'>Other</option>
             </Field>
         </label>
-        <label>
-            
+        <label className="checkbox-container">
             <Field type="checkbox" name='age' checked={values.age}/>
             I am at least 13 years of age
-            {errors.age && <p>{errors.age}</p>}
+            {errors.age && <p className='error'>{errors.age}</p>}
         </label>
-        <label>
+        <label className="checkbox-container">
             I have read and agree to the Terms of Service
             <Field type="checkbox" name='tos' checked={values.tos}/>
             I have read and agree to the Terms of Service
-            {errors.tos && <p>{errors.tos}</p>}
+            {errors.tos && <p className='error'>{errors.tos}</p>}
         </label>
         <button type="submit">Join Now!</button>
       </Form>
     </div>
+    <div className='display-users'>
+            <h2>Our Users</h2>
+            {newUser.map(user => (
+              <div className='user' key={useEffect.id}>
+                <p>{user.username}<span className = 'sub'> - {user.usertype}</span></p>
+            </div>
+            ))}
+    </div></>
   );
 };
 
