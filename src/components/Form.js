@@ -1,9 +1,16 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { withFormik, Form, Field } from "formik";
 import axios from "axios";
 import * as Yup from "yup";
 
-const SignUpForm = ({ values, errors, touched }) => {
+const SignUpForm = ({ values, errors, touched, status }) => {
+  const [newUser, setNewUser] = useState([]);
+useEffect(() => {
+  if(status){
+    setNewUser([...newUser, status])
+  }
+},[status]);
+
   return (
     <div>
       <Form>
@@ -109,8 +116,16 @@ validationSchema: Yup.object().shape({
     tos: Yup.bool().oneOf([true], "You must accept the Terms to sign up")
     
 }),
-
-
 //==========End Schema=============================
+
+handleSubmit(values, { setStatus }){
+  axios
+    .post("https://reqres.in/api/users", values)
+    .then(res =>{
+      setStatus(res.data);
+    })
+    .catch(err => console.log(err.res));
+}
+
 
 })(SignUpForm);
