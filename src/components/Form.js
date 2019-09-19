@@ -65,6 +65,8 @@ const SignUpForm = ({ values }) => {
   );
 };
 
+
+
 export const FormikSignUpForm = withFormik({
   mapPropsToValues({ name, username, email, password, usertype, ruleset, reach, age, tos }) {
     return {
@@ -78,5 +80,21 @@ export const FormikSignUpForm = withFormik({
       age: age || false,
       tos: tos || false
     };
-  }
+  },
+
+//===========Validation Schema=====================
+
+validationSchema: Yup.object().shape({
+    name:Yup.string().required("Please enter your name"),
+    username:Yup.string().required("Please enter a username"),
+    email:Yup.string().email("please enter a valid email address").required("please enter an email address"),
+    password: Yup.string().min(8, 'passwords must be at least 8 characters').required('please enter a password'),
+    age: Yup.bool().oneOf([true], "You must be 13 or older to sign up"),
+    tos: Yup.bool().oneOf([true], "You must accept the Terms to sign up")
+    
+}),
+
+
+//==========End Schema=============================
+
 })(SignUpForm);
